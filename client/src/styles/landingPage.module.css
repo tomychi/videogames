@@ -1,0 +1,66 @@
+/* 
+    #242132
+    #746CFE
+    #AE8CFA
+    #FEFCFF
+
+*/
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-image: url(../assets/background.gif);
+    background-position: 80% 15%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.titulo {
+    display: block;
+    position: absolute;
+    text-transform: uppercase;
+    bottom: 668px;
+    margin-left: 30px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 50px;
+    font-weight: 700;
+    text-align: center;
+    color: #746cfe;
+    text-shadow: 0 0 5px #746cfe,
+        0 0 10px #746cfe,
+        0 0 20px #746cfe,
+        0 0 40px #ae8cfa,
+        0 0 80px #ae8cfa,
+        0 0 90px #ae8cfa,
+        0 0 110px #ae8cfa;
+}
+
+.btnHome {
+    display: block;
+    font-family: 'Roboto', sans-serif;
+    position: absolute;
+    text-transform: uppercase;
+    bottom: 320px;
+    font-weight: 700;
+    font-size: 20px;
+    margin-left: -58px;
+    width: 160px;
+    height: 60px;
+    background: #ae8cfa;
+    opacity: 0.8;
+    cursor: pointer;
+    border-radius: 25px;
+    box-shadow: 0 0 5px #746cfe,
+            0 0 10px #746cfe,
+            0 0 20px #746cfe,
+            0 0 90px #ae8cfa;
+    color: #746cfe;
+}
+
+.btnHome:hover {
+    opacity: 1;
+}
