@@ -1,0 +1,62 @@
+/* 
+    #242132
+    #746CFE
+    #AE8CFA
+    #FEFCFF
+
+*/
+
+.card {
+    /* From https://css.glass */
+    max-width: 250px;
+    max-height: 350px;
+    background: rgba(116, 108, 254, 0.48);
+    border-radius: 16px;
+    backdrop-filter: blur(6.6px);
+    -webkit-backdrop-filter: blur(6.6px);
+    border: 1px solid rgba(116, 108, 254, 0.59);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 30px 50px;
+    box-shadow: 0 0 5px #746cfe,
+        0 0 10px #746cfe,
+        0 0 20px #746cfe,
+        0 0 80px #ae8cfa;
+
+    padding: 30px;
+}
+.card:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+    
+}
+
+
+.card h3 {
+    color: #242132;
+    margin: 10px;
+    line-height: 1.1;
+    font-size: 1.1rem;
+}
+
+.card h5 {
+    margin: 10px;
+    line-height: 1.1;
+    font-size: 1rem;
+}
+
+.card p {
+    margin: 10px;
+    line-height: 1.1;
+    font-size: .8rem;
+    color: #242132;
+}
+
+.card img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 16px 16px 0 0;
+}

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { getGenres, postVideogame, getPlatforms } from '../actions';
+import s from '../styles/gameCreated.module.css';
 
 const validate = (input) => {
     let errors = {};
@@ -173,110 +174,120 @@ export const GameCreated = () => {
             : false;
 
     return (
-        <div>
+        <div className={s.gameCreated}>
             <Link to='/home'>
-                <button>Home</button>
+                <button className={s.homeBtn}>Home</button>
             </Link>
             <h1>Crea tu juego</h1>
             <form
                 onSubmit={(e) => {
                     handleSubmit(e);
                 }}
+                className={s.form}
             >
-                <div>
-                    <label>Nombre: </label>
-                    <input
-                        type='text'
-                        name='name'
-                        value={input.name}
-                        onChange={handleInputChange}
-                    />
-                    {errors.name && <p>{errors.name}</p>}
-                </div>
-                <div>
-                    <label>Descripción: </label>
-                    <input
-                        type='text'
-                        name='description'
-                        value={input.description}
-                        onChange={handleInputChange}
-                    />
-                    {errors.description && <p>{errors.description}</p>}
-                </div>
+                <div className={s.containerInputsAndSelects}>
+                    <div className={s.left}>
+                        <div className={s.inputContainer}>
+                            <div>
+                                <label>Nombre: </label>
+                                <input
+                                    type='text'
+                                    name='name'
+                                    value={input.name}
+                                    onChange={handleInputChange}
+                                />
+                                {errors.name && <p>{errors.name}</p>}
+                            </div>
+                            <div>
+                                <label>Descripción: </label>
+                                <input
+                                    type='text'
+                                    name='description'
+                                    value={input.description}
+                                    onChange={handleInputChange}
+                                />
+                                {errors.description && (
+                                    <p>{errors.description}</p>
+                                )}
+                            </div>
 
-                <div>
-                    <label>Fecha de lanzamiento: </label>
-                    <input
-                        type='date'
-                        name='released'
-                        value={input.released}
-                        onChange={handleInputChange}
-                    />
-                    {errors.released && <p>{errors.released}</p>}
-                </div>
+                            <div>
+                                <label>Released: </label>
+                                <input
+                                    type='date'
+                                    name='released'
+                                    value={input.released}
+                                    onChange={handleInputChange}
+                                />
+                                {errors.released && <p>{errors.released}</p>}
+                            </div>
 
-                <div>
-                    <label>Rating: </label>
-                    <input
-                        type='text'
-                        name='rating'
-                        value={input.rating}
-                        onChange={handleInputChange}
-                    />
-                    {errors.rating && <p>{errors.rating}</p>}
-                </div>
-                <div>
-                    <label>Imagen: </label>
-                    <input
-                        type='text'
-                        name='background_image'
-                        value={input.background_image}
-                        onChange={handleInputChange}
-                    />
-                    {errors.background_image && (
-                        <p>{errors.background_image}</p>
-                    )}
-                </div>
+                            <div>
+                                <label>Rating: </label>
+                                <input
+                                    type='text'
+                                    name='rating'
+                                    value={input.rating}
+                                    onChange={handleInputChange}
+                                />
+                                {errors.rating && <p>{errors.rating}</p>}
+                            </div>
+                            <div>
+                                <label>Imagen: </label>
+                                <input
+                                    type='text'
+                                    name='background_image'
+                                    value={input.background_image}
+                                    onChange={handleInputChange}
+                                />
+                                {errors.background_image && (
+                                    <p>{errors.background_image}</p>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    <div className={s.right}>
+                        <div>
+                            <label>Plataformas: </label>
+                            <select
+                                name='platforms'
+                                defaultValue={'DEFAULT'}
+                                onChange={handleSelect}
+                                disabled={input.platforms.length === 5}
+                            >
+                                <option value={'DEFAULT'} disabled>
+                                    Selecciona una plataforma
+                                </option>
+                                {allPlatforms.map((p, i) => (
+                                    <option value={p} key={i}>
+                                        {p}
+                                    </option>
+                                ))}
+                            </select>
 
-                <div>
-                    <label>Plataformas: </label>
-                    <select
-                        name='platforms'
-                        defaultValue={'DEFAULT'}
-                        onChange={handleSelect}
-                        disabled={input.platforms.length === 5}
-                    >
-                        <option value={'DEFAULT'} disabled>
-                            Selecciona una plataforma
-                        </option>
-                        {allPlatforms.map((p, i) => (
-                            <option value={p} key={i}>
-                                {p}
-                            </option>
-                        ))}
-                    </select>
+                            {errors.platforms && <p>{errors.platforms}</p>}
+                        </div>
 
-                    {errors.platforms && <p>{errors.platforms}</p>}
-                </div>
-
-                <div>
-                    <label>Géneros: </label>
-                    <select
-                        name='genres'
-                        defaultValue={'DEFAULT'}
-                        onChange={handleSelect}
-                        disabled={input.genres.length === 5}
-                    >
-                        <option value={'DEFAULT'} disabled>
-                            Selecciona un genero
-                        </option>
-                        {allGenres.map((genre, i) => (
-                            <option key={i} value={genre}>
-                                {genre}
-                            </option>
-                        ))}
-                    </select>
-                    {errors.genres && <p>{errors.genres}</p>}
+                        <div>
+                            <label>Géneros: </label>
+                            <select
+                                name='genres'
+                                defaultValue={'DEFAULT'}
+                                onChange={handleSelect}
+                                disabled={input.genres.length === 5}
+                            >
+                                <option value={'DEFAULT'} disabled>
+                                    Selecciona un genero
+                                </option>
+                                {allGenres.map((genre, i) => (
+                                    <option key={i} value={genre}>
+                                        {genre}
+                                    </option>
+                                ))}
+                            </select>
+                            {errors.genres && <p>{errors.genres}</p>}
+                        </div>
+                    </div>
                 </div>
 
                 {/* deshabilitar el boton por defecto y si hay errores tambien */}
@@ -286,6 +297,7 @@ export const GameCreated = () => {
                     disabled={
                         Object.keys(errors).length || !validator ? true : false
                     }
+                    className={s.createdBtn}
                 >
                     Crear
                 </button>

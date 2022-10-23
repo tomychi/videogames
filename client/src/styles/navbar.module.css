@@ -1,0 +1,139 @@
+.navbar {
+    background-color: #242132;
+    color: #746CFE;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    box-shadow: 0 0 5px #746cfe,
+            0 0 10px #746cfe,
+            0 0 20px #746cfe,
+            0 0 5px #ae8cfa;
+}
+
+.logo {
+    color: #746CFE;
+    text-shadow: 0 0 5px #746cfe,
+        0 0 10px #746cfe,
+        0 0 20px #746cfe,
+        0 0 40px #ae8cfa,
+        0 0 110px #ae8cfa;
+    margin-top: 0;
+}
+
+.navbar a {
+    color: #746CFE;
+    text-decoration: none;
+    margin-right: 30px;
+}
+
+.navbar a:hover {
+    color: #AE8CFA;
+}
+
+.navbar a:active {
+    color: #FEFCFF;
+}
+
+.navbar button {
+    text-transform: uppercase;
+    width: 100px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    background: #ae8cfa;
+    opacity: 0.8;
+    cursor: pointer;
+    color: #746cfe;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    box-shadow: 0 0 5px #746cfe,
+            0 0 10px #746cfe,
+            0 0 20px #746cfe,
+            0 0 10px #ae8cfa;
+}
+
+.navbar button:hover {
+    background: #746cfe;
+        color: #ae8cfa;
+}
+.navbar button:active {
+    box-shadow: 0 0 5px #746cfe,
+            0 0 10px #746cfe,
+            0 0 20px #746cfe,
+            0 0 90px #ae8cfa;
+    position: relative;
+    top: .2em;
+}
+
+.filterContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;    
+}
+
+.filterContainer input {
+    width: 200px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    padding: 0 10px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    box-shadow: 0 0 5px #746cfe,
+            0 0 10px #746cfe,
+            0 0 20px #746cfe,
+            0 0 10px #ae8cfa;
+    
+    margin-right: 10px;
+    color: #746cfe;
+}
+
+.filterContainer input:focus {
+    outline: none;
+}
+
+.filterContainer input::placeholder {
+    color: #746cfe;
+}
+
+.filterContainer input:hover {
+    box-shadow: none;
+}
+
+.filterContainer select {
+    width: 200px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    padding: 0 10px;
+    margin: 10px;
+    box-shadow: 0 0 5px #746cfe,
+            0 0 10px #746cfe,
+            0 0 20px #746cfe,
+            0 0 10px #ae8cfa;
+    background-color:  #d0bbff;
+}   
+
+.filterContainer select:active {
+    box-shadow: none;
+}
+.filterContainer select option {
+    color: #746cfe;
+    background-color: #242132;
+}
+

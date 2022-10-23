@@ -9,15 +9,35 @@
 }
 
 .number {
-    color: #410000;
-    font-size: 1.5rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #d0bbff;
+    color: #746cfe;
+    font-family: 'Roboto', sans-serif;
     font-weight: 700;
-    margin: 0 0.5rem;
-    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 0 5px #746cfe,
+            0 0 10px #746cfe,
+            0 0 20px #746cfe,
+                0 0 20px #746cfe,
+            0 0 90px #ae8cfa;
+    margin: 0 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
 }
 
 .number:hover {
+    box-shadow: none;
+    background-color: #746cfe;
+    color: #d0bbff;
+        
 
-    color: #ff0000;
 
+}
+
+.number:active {
+    box-shadow: none;
 }

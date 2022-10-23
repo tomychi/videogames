@@ -40,25 +40,24 @@
 }
 
 .btnHome {
-    display: block;
-    font-family: 'Roboto', sans-serif;
-    position: absolute;
+    margin-left: 35px;
+    margin-top: 80px;
     text-transform: uppercase;
-    bottom: 320px;
-    font-weight: 700;
-    font-size: 20px;
-    margin-left: -58px;
-    width: 160px;
-    height: 60px;
+    width: 100px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
     background: #ae8cfa;
     opacity: 0.8;
     cursor: pointer;
-    border-radius: 25px;
-    box-shadow: 0 0 5px #746cfe,
-            0 0 10px #746cfe,
-            0 0 20px #746cfe,
-            0 0 90px #ae8cfa;
     color: #746cfe;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    box-shadow: 0 0 5px #746cfe,
+        0 0 10px #746cfe,
+        0 0 20px #746cfe,
+        0 0 10px #ae8cfa;
 }
 
 .btnHome:hover {

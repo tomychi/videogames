@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     getVideogames,
@@ -10,10 +10,11 @@ import {
 } from '../actions';
 import { Link } from 'react-router-dom';
 import { Card } from './Card';
+import { Navbar } from './Navbar';
 import { Paginado } from './Paginado';
-import { SearchBar } from './SearchBar';
 
 import s from '../styles/home.module.css';
+import { Loading } from './Loading';
 
 export const Home = () => {
     const dispatch = useDispatch();
@@ -46,16 +47,13 @@ export const Home = () => {
 
     // nos traemos los videojuegos cuando se monta el componente
     useEffect(() => {
-        dispatch(getVideogames());
         dispatch(getGenres());
+        dispatch(getVideogames());
     }, [dispatch]);
 
-    const handleReload = (e) => {
+    const handleRefresh = (e) => {
         e.preventDefault();
         dispatch(getVideogames());
-
-        // reseteo el estado de orden
-        setOrden('');
 
         // reseteo el estado de la pagina actual
         setCurrentPage(1);
@@ -87,103 +85,62 @@ export const Home = () => {
     };
     return (
         <div>
-            <Link to='/videogame'>Create Videogame</Link>
-            <h1>JUEGOS</h1>
-            <button
-                onClick={(e) => {
-                    handleReload(e);
-                }}
-            >
-                Reload
-            </button>
+            <Navbar
+                handleRefresh={handleRefresh}
+                handleFilterGenre={handleFilterGenre}
+                handleOrderByName={handleOrderByName}
+                handleFilterCreated={handleFilterCreated}
+                handleOrderByRating={handleOrderByRating}
+                allGenres={allGenres}
+            />
+            {currentVideogames.length > 0 ? (
+                <div className={s.container}>
+                    {
+                        // si no hay videojuegos, muestro un mensaje
+                        currentVideogames.length === 0 ? (
+                            <h1>No hay videojuegos</h1>
+                        ) : (
+                            // si hay videojuegos, los muestro
+                            <div className={s.cards}>
+                                {currentVideogames?.map((v, i) => (
+                                    <div key={i}>
+                                        <Link
+                                            to={`/videogames/${v.id}`}
+                                            className={s.linkCard}
+                                        >
+                                            <Card
+                                                key={v.id}
+                                                name={v.name}
+                                                image={v.background_image}
+                                                rating={v.rating}
+                                                // agrupar los generenos en un array los que tengan el mismo id
 
-            <div>
-                <select
-                    onChange={(e) => {
-                        handleFilterGenre(e);
-                    }}
-                >
-                    <option value='All'>All</option>
-                    {allGenres.map((genre, i) => (
-                        <option key={i} value={genre}>
-                            {genre}
-                        </option>
-                    ))}
-                </select>
-
-                <select
-                    onChange={(e) => {
-                        handleOrderByName(e);
-                    }}
-                    defaultValue='Ordenar'
-                >
-                    <option value='Ordenar' disabled>
-                        Ordenar A-Z
-                    </option>
-                    <option value='asc'>Ascendente</option>
-                    <option value='desc'>Descendente</option>
-                </select>
-
-                <select
-                    onChange={(e) => {
-                        handleFilterCreated(e);
-                    }}
-                    defaultValue='All'
-                >
-                    <option value='All'>Todos</option>
-                    <option value='Created'>Creados</option>
-                    <option value='Api'>Existentes</option>
-                </select>
-                <select
-                    onChange={(e) => {
-                        handleOrderByRating(e);
-                    }}
-                    defaultValue='rating'
-                >
-                    <option value='rating' disabled>
-                        Rating
-                    </option>
-                    <option value='low'>Low to High</option>
-                    <option value='high'>High to Low</option>
-                </select>
-
-                <Paginado
-                    videogamesPerPage={videogamesPerPage}
-                    allVideogames={allVideogames}
-                    paginate={paginate}
-                />
-
-                <SearchBar />
-
-                {
-                    // si no hay videojuegos, muestro un mensaje
-                    currentVideogames.length === 0 ? (
-                        <h1>No hay videojuegos</h1>
-                    ) : (
-                        // si hay videojuegos, los muestro
-                        currentVideogames.map((v, i) => (
-                            <div key={i}>
-                                <Link to={`/videogames/${v.id}`}>
-                                    <Card
-                                        key={v.id}
-                                        name={v.name}
-                                        image={v.background_image}
-                                        rating={v.rating}
-                                        // agrupar los generenos en un array los que tengan el mismo id
-
-                                        genres={
-                                            // cuando sea un array de objetos lo concateno con el spread operator
-                                            v.genres.concat(
-                                                v.genres.map((g) => g.name)
-                                            )
-                                        }
-                                    />
-                                </Link>
+                                                genres={
+                                                    // cuando sea un array de objetos lo concateno con el spread operator
+                                                    v.genres.concat(
+                                                        v.genres.map(
+                                                            (g) => g.name
+                                                        )
+                                                    )
+                                                }
+                                            />
+                                        </Link>
+                                    </div>
+                                ))}
                             </div>
-                        ))
-                    )
-                }
-            </div>
+                        )
+                    }
+                    <div className={s.footer}>
+                        <Paginado
+                            videogamesPerPage={videogamesPerPage}
+                            allVideogames={allVideogames}
+                            paginate={paginate}
+                        />
+                    </div>
+                </div>
+            ) : (
+                <Loading />
+            )}
         </div>
     );
 };
