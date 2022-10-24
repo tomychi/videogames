@@ -175,147 +175,195 @@ export const GameCreated = () => {
 
     return (
         <div className={s.gameCreated}>
-            <Link to='/home'>
-                <button className={s.homeBtn}>Home</button>
-            </Link>
-            <h1>Crea tu juego</h1>
-            <form
-                onSubmit={(e) => {
-                    handleSubmit(e);
-                }}
-                className={s.form}
-            >
-                <div className={s.containerInputsAndSelects}>
-                    <div className={s.left}>
-                        <div className={s.inputContainer}>
-                            <div>
-                                <label>Nombre: </label>
-                                <input
-                                    type='text'
-                                    name='name'
-                                    value={input.name}
-                                    onChange={handleInputChange}
-                                />
-                                {errors.name && <p>{errors.name}</p>}
-                            </div>
-                            <div>
-                                <label>Descripción: </label>
-                                <input
-                                    type='text'
-                                    name='description'
-                                    value={input.description}
-                                    onChange={handleInputChange}
-                                />
-                                {errors.description && (
-                                    <p>{errors.description}</p>
-                                )}
-                            </div>
-
-                            <div>
-                                <label>Released: </label>
-                                <input
-                                    type='date'
-                                    name='released'
-                                    value={input.released}
-                                    onChange={handleInputChange}
-                                />
-                                {errors.released && <p>{errors.released}</p>}
-                            </div>
-
-                            <div>
-                                <label>Rating: </label>
-                                <input
-                                    type='text'
-                                    name='rating'
-                                    value={input.rating}
-                                    onChange={handleInputChange}
-                                />
-                                {errors.rating && <p>{errors.rating}</p>}
-                            </div>
-                            <div>
-                                <label>Imagen: </label>
-                                <input
-                                    type='text'
-                                    name='background_image'
-                                    value={input.background_image}
-                                    onChange={handleInputChange}
-                                />
-                                {errors.background_image && (
-                                    <p>{errors.background_image}</p>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                    <div className={s.right}>
-                        <div>
-                            <label>Plataformas: </label>
-                            <select
-                                name='platforms'
-                                defaultValue={'DEFAULT'}
-                                onChange={handleSelect}
-                                disabled={input.platforms.length === 5}
-                            >
-                                <option value={'DEFAULT'} disabled>
-                                    Selecciona una plataforma
-                                </option>
-                                {allPlatforms.map((p, i) => (
-                                    <option value={p} key={i}>
-                                        {p}
-                                    </option>
-                                ))}
-                            </select>
-
-                            {errors.platforms && <p>{errors.platforms}</p>}
-                        </div>
-
-                        <div>
-                            <label>Géneros: </label>
-                            <select
-                                name='genres'
-                                defaultValue={'DEFAULT'}
-                                onChange={handleSelect}
-                                disabled={input.genres.length === 5}
-                            >
-                                <option value={'DEFAULT'} disabled>
-                                    Selecciona un genero
-                                </option>
-                                {allGenres.map((genre, i) => (
-                                    <option key={i} value={genre}>
-                                        {genre}
-                                    </option>
-                                ))}
-                            </select>
-                            {errors.genres && <p>{errors.genres}</p>}
-                        </div>
-                    </div>
-                </div>
-
-                {/* deshabilitar el boton por defecto y si hay errores tambien */}
-
-                <button
-                    type='submit'
-                    disabled={
-                        Object.keys(errors).length || !validator ? true : false
-                    }
-                    className={s.createdBtn}
+            <div>
+                <Link to='/home'>
+                    <button className={s.homeBtn}>Home</button>
+                </Link>
+            </div>
+            <h2>Crea tu juego</h2>
+            <div className={s.form}>
+                <form
+                    onSubmit={(e) => {
+                        handleSubmit(e);
+                    }}
                 >
-                    Crear
-                </button>
-            </form>
+                    <div className={s.containerInputsAndSelects}>
+                        <div className={s.left}>
+                            <div className={s.inputContainer}>
+                                <div className={s.separador}>
+                                    <label>Nombre: </label>
+                                    <input
+                                        type='text'
+                                        name='name'
+                                        value={input.name}
+                                        onChange={handleInputChange}
+                                        placeholder='Nombre'
+                                    />
+                                </div>
+                                {errors.name && (
+                                    <p className={s.errorMessages}>
+                                        {errors.name}
+                                    </p>
+                                )}
+                                <div className={s.separador}>
+                                    <label>Descripción: </label>
+                                    <textarea
+                                        type='text'
+                                        name='description'
+                                        value={input.description}
+                                        onChange={handleInputChange}
+                                        placeholder={'es un juego de...'}
+                                    />
+                                </div>
+                                {errors.description && (
+                                    <p className={s.errorMessages}>
+                                        {errors.description}
+                                    </p>
+                                )}
 
-            {input.platforms.map((p, i) => (
-                <div key={i}>
-                    <p>{p}</p>
-                    <button onClick={() => handleDeletePlatforms(p)}>X</button>
-                </div>
-            ))}
+                                <div className={s.separador}>
+                                    <label>Released: </label>
+                                    <input
+                                        type='date'
+                                        name='released'
+                                        value={input.released}
+                                        onChange={handleInputChange}
+                                    />
+                                </div>
+                                {errors.released && (
+                                    <p className={s.errorMessages}>
+                                        {errors.released}
+                                    </p>
+                                )}
 
-            {input.genres.map((genre, i) => (
-                <div key={i}>
-                    <p>{genre}</p>
-                    <button onClick={() => handleDeleteGenres(genre)}>X</button>
-                </div>
-            ))}
+                                <div className={s.separador}>
+                                    <label>Rating: </label>
+                                    <input
+                                        type='text'
+                                        name='rating'
+                                        value={input.rating}
+                                        onChange={handleInputChange}
+                                        placeholder='3'
+                                    />
+                                </div>
+                                {errors.rating && (
+                                    <p className={s.errorMessages}>
+                                        {errors.rating}
+                                    </p>
+                                )}
+                                <div className={s.separador}>
+                                    <label>Imagen: </label>
+                                    <input
+                                        type='text'
+                                        name='background_image'
+                                        value={input.background_image}
+                                        onChange={handleInputChange}
+                                        placeholder='URL'
+                                    />
+                                </div>
+                                {errors.background_image && (
+                                    <p className={s.errorMessages}>
+                                        {errors.background_image}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                        <div className={s.right}>
+                            <div className={s.selectContainer}>
+                                <label>Plataformas: </label>
+                                <select
+                                    name='platforms'
+                                    defaultValue={'DEFAULT'}
+                                    onChange={handleSelect}
+                                    disabled={input.platforms.length === 5}
+                                >
+                                    <option value={'DEFAULT'} disabled>
+                                        Selecciona una plataforma
+                                    </option>
+                                    {allPlatforms.map((p, i) => (
+                                        <option value={p} key={i}>
+                                            {p}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                {errors.platforms && (
+                                    <p className={s.errorMessages}>
+                                        {errors.platforms}
+                                    </p>
+                                )}
+                                <div className={s.platformsContainer}>
+                                    {input.platforms?.map((p, i) => (
+                                        <div key={i} className={s.platforms}>
+                                            <p>{p}</p>
+                                            <button
+                                                onClick={() =>
+                                                    handleDeletePlatforms(p)
+                                                }
+                                                className={s.deleteBtn}
+                                            >
+                                                X
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <label>Géneros: </label>
+                                <select
+                                    name='genres'
+                                    defaultValue={'DEFAULT'}
+                                    onChange={handleSelect}
+                                    disabled={input.genres.length === 5}
+                                >
+                                    <option value={'DEFAULT'} disabled>
+                                        Selecciona un genero
+                                    </option>
+                                    {allGenres.map((genre, i) => (
+                                        <option key={i} value={genre}>
+                                            {genre}
+                                        </option>
+                                    ))}
+                                </select>
+                                {errors.genres && (
+                                    <p className={s.errorMessages}>
+                                        {errors.genres}
+                                    </p>
+                                )}
+
+                                <div className={s.genresContainer}>
+                                    {input.genres?.map((genre, i) => (
+                                        <div key={i} className={s.genres}>
+                                            <p>{genre}</p>
+                                            <button
+                                                onClick={() =>
+                                                    handleDeleteGenres(genre)
+                                                }
+                                                className={s.deleteBtn}
+                                            >
+                                                X
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* deshabilitar el boton por defecto y si hay errores tambien */}
+
+                    <button
+                        type='submit'
+                        disabled={
+                            Object.keys(errors).length || !validator
+                                ? true
+                                : false
+                        }
+                        className={s.createdBtn}
+                    >
+                        Crear
+                    </button>
+                </form>
+            </div>
         </div>
     );
 };

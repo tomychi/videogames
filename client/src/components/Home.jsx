@@ -53,10 +53,8 @@ export const Home = () => {
 
     const handleRefresh = (e) => {
         e.preventDefault();
-        dispatch(getVideogames());
 
-        // reseteo el estado de la pagina actual
-        setCurrentPage(1);
+        dispatch(getVideogames());
     };
 
     const handleFilterGenre = (e) => {

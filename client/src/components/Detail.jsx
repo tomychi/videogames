@@ -2,6 +2,9 @@ import { getDetail } from '../actions';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Loading } from './Loading';
+
+import s from '../styles/detail.module.css';
 
 export const Detail = ({ match }) => {
     const dispatch = useDispatch();
@@ -24,36 +27,45 @@ export const Detail = ({ match }) => {
     return (
         // si game es undefined no renderizo nada
         detail.length > 0 ? (
-            <div className='detail'>
-                <div className='detailContainer'>
-                    <div className='detailImg'>
+            <div className={s.detail}>
+                <div className={s.detailContainer}>
+                    <div className={s.detailImg}>
                         <img
                             src={detail[0].background_image}
                             alt={detail[0].name}
                         />
                     </div>
-                    <div className='detailInfo'>
+                    <div className={s.detailInfo}>
                         <h2>{detail[0].name}</h2>
-                        <p>Released: {detail[0].released}</p>
-                        <p>Rating: {detail[0].rating}</p>
-                        <p>Platforms: {detail[0].platforms.map((p) => p)}</p>
                         <p>
-                            Genres:{' '}
-                            {esIdSequelize(detail[0].id) // si es id de sequeliza
-                                ? detail[0].genres.map((g) => g.name)
-                                : detail[0].genres.map((g) => g)}
+                            <label>Released: </label> {detail[0].released}
                         </p>
-                        <p>Description: {detail[0].description}</p>
+                        <p>
+                            <label>Rating: </label> {detail[0].rating}
+                        </p>
+                        <p className={s.removeComa}>
+                            <label>Platforms: </label>
+                            {detail[0].platforms.map((p) => p + ', ')}
+                        </p>
+                        <p className={s.removeComa}>
+                            <label>Genres: </label>
+                            {esIdSequelize(detail[0].id) // si es id de sequeliza
+                                ? detail[0].genres.map((g) => g.name + ', ')
+                                : detail[0].genres.map((g) => g + ', ')}
+                        </p>
+                        <p>
+                            <label>Description: </label> {detail[0].description}
+                        </p>
                     </div>
                 </div>
-                <div className='buttonsBack'>
+                <div>
                     <Link to='/home'>
-                        <button className='buttonsBack'>Back</button>
+                        <button className={s.buttonsBack}>Back</button>
                     </Link>
                 </div>
             </div>
         ) : (
-            <h1> Loading... </h1>
+            <Loading />
         )
     );
 };

@@ -1,35 +1,28 @@
-/* 
-    #242132
-    #746CFE
-    #AE8CFA
-    #FEFCFF
 
-*/
 .gameCreated {
     height: 100vh;
     width: 100vw;
-        /* From https://css.glass */
-    background: rgba(174, 140, 250, 0.56);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(14.7px);
-    -webkit-backdrop-filter: blur(14.7px);
-    border: 1px solid rgba(174, 140, 250, 0.3);
+    background: linear-gradient(to right, #242132, #746cfe, #ae8cfa);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
 }
 
-.gameCreated h1 {
+.gameCreated h2 {
     font-size: 3rem;
     font-weight: 700;
     color: #242132;
-    margin-bottom: 1rem;
+    width: max-content;
     position: absolute;
-    top : 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    
+    top: 0;
+    margin-top: 1rem;
+    text-shadow: 0 0 16px #ae8cfa;
 }
 
-.gameCreated button {
+.gameCreated .homeBtn,
+.gameCreated .createdBtn {
     text-transform: uppercase;
     width: 100px;
     height: 30px;
@@ -48,16 +41,14 @@
         0 0 10px #ae8cfa;
 }
 
-.gameCreated button:hover {
+.gameCreated .homeBtn:hover,
+.gameCreated .createdBtn:hover {
     background: #746cfe;
     color: #ae8cfa;
 }
 
-.gameCreated button:active {
-    
-    position: relative;
-    top: .2em;
-
+.gameCreated .homeBtn:active,
+.gameCreated .createdBtn:active {
     box-shadow: 0 0 5px #746cfe,
         0 0 10px #746cfe,
         0 0 20px #746cfe,
@@ -74,7 +65,36 @@
 .createdBtn {
     position: absolute;
     margin: 2rem;
-    bottom: 0;
+    bottom: 1rem;
+    right: 4rem;
+}
+
+.createdBtn:disabled {
+    background: #242132;
+    opacity: 0.2;
+    color: #ae8cfa;
+    box-shadow: 0 0 5px #ae8cfa,
+        0 0 10px #ae8cfa,
+        0 0 20px #ae8cfa,
+        0 0 90px #ae8cfa;
+}
+
+.createdBtn:disabled:hover {
+    cursor: no-drop;
+}
+
+.form {
+    width: 90%;
+    height: 85%;
+    background: #ae8cfa;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #746cfe,
+        0 0 10px #746cfe,
+        0 0 20px #746cfe,
+        0 0 40px #ae8cfa,
+            0 0 90px #ae8cfa;
+    background-color: #242132;
+    margin-top: 3rem;
 }
 
 .containerInputsAndSelects {
@@ -82,49 +102,41 @@
     justify-content: space-around;
 }
 
-.left {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
+.separador {
+    margin-bottom: .2rem;
+}
 
-    margin-top: 10rem;
+.containerInputsAndSelects label {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ae8cfa;
+    text-transform: capitalize;
+    text-shadow: 0 0 6px #ae8cfa;
+    display: block;
+    text-align: start;
+}
+
+.left, .right {
+    width: 50%;
 }
 
 .right {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-
-    margin-top: 10rem;
+    padding-top: 30px;
 }
 
 .inputContainer {
-    margin: auto;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 1rem;
-}
-
-.inputContainer label {
-    display: block;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #242132;
-    margin-bottom: 0.5rem;
-    text-transform: capitalize;
-    text-align: start;
-
+    margin-top: 2rem;
+    margin-left: 2rem;
 }
 
 .inputContainer input {
-    max-width: 354px;
-    max-height: max-content;
-    width: 95%;
+    width: 100vh;
     height: 30px;
     border-radius: 5px;
     border: none;
-    padding: 0 10px;
     background: #ae8cfa;
     opacity: 0.8;
     cursor: pointer;
@@ -138,23 +150,140 @@
         0 0 10px #ae8cfa;
 }
 
+.inputContainer input:hover {
+    background: #746cfe;
+    color: #ae8cfa;
+}
+
+.inputContainer input:active {
+    box-shadow: 0 0 5px #746cfe,
+        0 0 10px #746cfe,
+        0 0 20px #746cfe,
+        0 0 90px #ae8cfa;
+}
+
 .inputContainer input:focus {
-    outline: 0.5px solid #746cfe;
+    outline: none;
 }
 
 .inputContainer input::placeholder {
-    color: #746cfe;
+    text-transform: capitalize;
 }
 
-.textareaContainer {
-        min-width: 95%;
-        max-width: 95%;
-        min-height: 100px;
-        max-height: 150px;
-        border: 1px solid #444;
-        border-radius: 4px;
-        background-color: #111;
-        color: #fff;
-        font-size: 17px;
-        resize: none;
+
+.inputContainer textarea {
+    min-width: 100vh;
+    min-height: 100px;
+    max-height: 150px;
+    border: 1px solid #ae8cfa;
+    border-radius: 5px;
+    background: #ae8cfa;
+    opacity: 0.8;
+    cursor: text;
+    color: #746cfe;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    box-shadow: 0 0 5px #746cfe,
+        0 0 10px #746cfe,
+        0 0 20px #746cfe,
+        0 0 10px #ae8cfa;
+}
+
+.inputContainer textarea:hover {
+    background: #746cfe;
+    color: #ae8cfa;
+}
+
+.inputContainer textarea:focus {
+    outline: none;
+}
+
+.inputContainer textarea::placeholder {
+    text-transform: capitalize;
+}
+
+.selectContainer {
+    width: 100vh;
+    margin: auto;
+    text-align: start;
+    margin-left: 10rem;
+    
+}
+
+.selectContainer select {
+    width: 50vh;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    background: #ae8cfa;
+    opacity: 0.8;
+    cursor: pointer;
+    color: #746cfe;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    box-shadow: 0 0 5px #746cfe,
+        0 0 10px #746cfe,
+        0 0 20px #746cfe,
+        0 0 10px #ae8cfa;
+}
+
+.selectContainer select:hover {
+    background: #746cfe;
+    color: #ae8cfa;
+}
+
+.genresContainer, .platformsContainer {
+    display: flex;
+}
+.platforms, .genres {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+    border: 2px solid #746cfe;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #746cfe,
+        0 0 10px #746cfe,
+        0 0 20px #746cfe,
+        0 0 10px #ae8cfa;
+    background-color: #746cfe;
+    color: #ae8cfa;
+    font-size: 14px;
+    font-weight: 600;
+    max-width: max-content;
+    padding: 3px;
+    position: relative;
+    margin-right: 14px;
+}
+
+
+.deleteBtn {
+    background-color: rgba(255, 12, 12, .7);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 8px;
+    font-weight: 600;
+    margin: 5px;
+    position: absolute;
+    top: -8px;
+    right: -5px;
+
+    box-shadow: 0 0 5px red,
+        0 0 10px red,
+        0 0 20px #746cfe,
+        0 0 10px #ae8cfa;
+} 
+
+.errorMessages {
+    color: red;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 2rem;
 }
