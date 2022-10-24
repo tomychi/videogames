@@ -19,10 +19,16 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
+require('dotenv').config();
+const port = process.env.PORT || 3000;
+const { loadGenres } = require('./src/controllers/genres.controllers.js');
+const { loadPlatforms } = require('./src/controllers/platforms.controllers.js');
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
-    server.listen(3001, () => {
-        console.log('%s listening at 3001'); // eslint-disable-line no-console
+conn.sync({ force: false }).then(async () => {
+    await loadGenres(true);
+    await loadPlatforms(true);
+    server.listen(port, () => {
+        console.log(`%s listening at ${port}`); // eslint-disable-line no-console
     });
 });

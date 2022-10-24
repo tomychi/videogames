@@ -1,7 +1,6 @@
 const axios = require('axios');
 const { Videogame, Genre } = require('../db');
 const { API_KEY } = process.env;
-require('dotenv').config();
 
 // solicito la informacion de la api
 const getApiInfo = async () => {
@@ -48,16 +47,20 @@ const getApiInfo = async () => {
 
 // solicito la informacion de la base de datos
 const getDbInfo = async () => {
-    return await Videogame.findAll({
-        include: {
-            model: Genre, // me trae el nombre del genero
-            attributes: ['name'],
-            through: {
-                // me trae los atributs (name)
-                attributes: [],
+    try {
+        return await Videogame.findAll({
+            include: {
+                model: Genre, // me trae el nombre del genero
+                attributes: ['name'],
+                through: {
+                    // me trae los atributs (name)
+                    attributes: [],
+                },
             },
-        },
-    });
+        });
+    } catch (error) {
+        throw new Error(`Error en la base de datos ${error}`);
+    }
 };
 
 const getVideogameApiById = async (idVideogame) => {
@@ -113,19 +116,87 @@ const getVideogameById = async (req, res) => {
             return res.status(200).send(videoGameFoundApi);
         }
     } catch (error) {
-        // console.log(error);
         return res.status(404).send(videoGameFoundApi);
     }
 };
 
-const getAllVideoGames = async () => {
-    const apiInfo = await getApiInfo();
-    const dbInfo = await getDbInfo();
-    const allVideoGames = apiInfo.concat(dbInfo);
-    return allVideoGames;
+const getAllVideoGames = async (req, res) => {
+    try {
+        const name = req.query.name;
+        const apiInfo = await getApiInfo();
+        const dbInfo = await getDbInfo();
+        const allVideoGames = apiInfo.concat(dbInfo);
+        if (name) {
+            const videogameName = allVideoGames.filter((e) =>
+                e.name.toLowerCase().includes(name.toLowerCase())
+            );
+
+            if (videogameName.length) {
+                return res.status(200).send(videogameName);
+            }
+            return res.status(404).send('No se encontro el juego');
+        }
+        return res.status(200).send(allVideoGames);
+    } catch (error) {
+        throw new Error(`Error en obtener todos los videojuegos ${error}`);
+    }
+};
+
+const postVideogame = async (req, res) => {
+    try {
+        const {
+            name,
+            description,
+            released,
+            rating,
+            platforms,
+            genres,
+            background_image,
+        } = req.body;
+        const validator =
+            name && description && released && rating && platforms
+                ? true
+                : false;
+
+        if (!validator) return res.status(400).send('Faltan campos');
+        const newVideoGame = await Videogame.create({
+            name,
+            description,
+            released,
+            rating,
+            platforms,
+            background_image,
+            createdInDB: true,
+        });
+
+        // a los generos que me llegan por body los busco en la base de datos
+        const genresDb = await Genre.findAll({
+            where: {
+                name: genres.map((g) => g),
+            },
+        });
+        // le asigno los generos a la nueva videojuego
+        newVideoGame.addGenres(genresDb);
+        return res.status(200).send('Juego creado');
+    } catch (error) {
+        throw new Error(`Error en crear el videojuego ${error}`);
+    }
 };
 
 module.exports = {
     getAllVideoGames,
     getVideogameById,
+    postVideogame,
 };
+/* 
+ejemplo post videojuego
+    {
+        "name": "The Legend of Zelda: Breath of the Wild",
+        "description": "aa",
+        "released": "2017-03-03",
+        "rating": 5,
+        "platforms": [ "PC", "PlayStation 4", "Xbox One", "Nintendo Switch" ],
+        "genres": [ "Action", "Adventure", "RPG" ],
+        "background_image": "http://t1.gstatic.com/images?q=tbn:ANd9GcR0AffgWu7JMC9EehnQRpXNFpe-6TtuNojNthUyUhYSaD2JdPmW"
+    }
+*/
