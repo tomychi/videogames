@@ -15,11 +15,15 @@ import {
     RESET_DETAIL,
 } from '../types';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 const LOCALHOST = 'http://localhost:3001';
+const BASE_URL = process.env.REACT_APP_API;
 
 export const getVideogames = () => {
     return async function (dispatch) {
-        const json = await axios.get(`${LOCALHOST}/videogames`);
+        const json = await axios.get(`${BASE_URL || LOCALHOST}/videogames`);
         return dispatch({
             type: GET_VIDEOGAMES,
             payload: json.data,
@@ -31,7 +35,7 @@ export const getNameVideogames = (name) => {
     return async function (dispatch) {
         try {
             const json = await axios.get(
-                `${LOCALHOST}/videogames?name=${name}`
+                `${BASE_URL || LOCALHOST}/videogames?name=${name}`
             );
             return dispatch({
                 type: GET_NAME_VIDEOGAME,
@@ -46,7 +50,9 @@ export const getNameVideogames = (name) => {
 export const getDetail = (id) => {
     return async function (dispatch) {
         try {
-            const json = await axios.get(`${LOCALHOST}/videogames/${id}`);
+            const json = await axios.get(
+                `${BASE_URL || LOCALHOST}/videogames/${id}`
+            );
             return dispatch({
                 type: GET_DETAIL,
                 payload: json.data,
@@ -59,7 +65,7 @@ export const getDetail = (id) => {
 
 export const getGenres = () => {
     return async function (dispatch) {
-        const json = await axios.get(`${LOCALHOST}/genres`);
+        const json = await axios.get(`${BASE_URL || LOCALHOST}/genres`);
         return dispatch({
             type: GET_GENRES,
             payload: json.data,
@@ -69,7 +75,7 @@ export const getGenres = () => {
 
 export const getPlatforms = () => {
     return async function (dispatch) {
-        const json = await axios.get(`${LOCALHOST}/platforms`);
+        const json = await axios.get(`${BASE_URL || LOCALHOST}/platforms`);
         return dispatch({
             type: GET_PLATFORMS,
             payload: json.data,
@@ -79,7 +85,10 @@ export const getPlatforms = () => {
 
 export const postVideogame = (payload) => {
     return async function (dispatch) {
-        const json = await axios.post(`${LOCALHOST}/videogames`, payload);
+        const json = await axios.post(
+            `${BASE_URL || LOCALHOST}/videogames`,
+            payload
+        );
         return json;
     };
 };
