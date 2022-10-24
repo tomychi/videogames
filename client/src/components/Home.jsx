@@ -1,4 +1,4 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     getVideogames,
@@ -7,6 +7,7 @@ import {
     filterCreated,
     orderByName,
     orderByRating,
+    resetVideogames,
 } from '../actions';
 import { Link } from 'react-router-dom';
 import { Card } from './Card';
@@ -53,8 +54,9 @@ export const Home = () => {
 
     const handleRefresh = (e) => {
         e.preventDefault();
-
+        dispatch(resetVideogames());
         dispatch(getVideogames());
+        setCurrentPage(1);
     };
 
     const handleFilterGenre = (e) => {
@@ -81,6 +83,7 @@ export const Home = () => {
         setOrden(`Ordenado: ${e.target.value}`);
         console.log(orden);
     };
+    console.log(currentVideogames);
     return (
         <div>
             <Navbar
@@ -91,42 +94,36 @@ export const Home = () => {
                 handleOrderByRating={handleOrderByRating}
                 allGenres={allGenres}
             />
+
             {currentVideogames.length > 0 ? (
                 <div className={s.container}>
                     {
-                        // si no hay videojuegos, muestro un mensaje
-                        currentVideogames.length === 0 ? (
-                            <h1>No hay videojuegos</h1>
-                        ) : (
-                            // si hay videojuegos, los muestro
-                            <div className={s.cards}>
-                                {currentVideogames?.map((v, i) => (
-                                    <div key={i}>
-                                        <Link
-                                            to={`/videogames/${v.id}`}
-                                            className={s.linkCard}
-                                        >
-                                            <Card
-                                                key={v.id}
-                                                name={v.name}
-                                                image={v.background_image}
-                                                rating={v.rating}
-                                                // agrupar los generenos en un array los que tengan el mismo id
+                        // si hay videojuegos, los muestro
+                        <div className={s.cards}>
+                            {currentVideogames?.map((v, i) => (
+                                <div key={i}>
+                                    <Link
+                                        to={`/videogames/${v.id}`}
+                                        className={s.linkCard}
+                                    >
+                                        <Card
+                                            key={v.id}
+                                            name={v.name}
+                                            image={v.background_image}
+                                            rating={v.rating}
+                                            // agrupar los generenos en un array los que tengan el mismo id
 
-                                                genres={
-                                                    // cuando sea un array de objetos lo concateno con el spread operator
-                                                    v.genres.concat(
-                                                        v.genres.map(
-                                                            (g) => g.name
-                                                        )
-                                                    )
-                                                }
-                                            />
-                                        </Link>
-                                    </div>
-                                ))}
-                            </div>
-                        )
+                                            genres={
+                                                // cuando sea un array de objetos lo concateno con el spread operator
+                                                v.genres.concat(
+                                                    v.genres.map((g) => g.name)
+                                                )
+                                            }
+                                        />
+                                    </Link>
+                                </div>
+                            ))}
+                        </div>
                     }
                     <div className={s.footer}>
                         <Paginado

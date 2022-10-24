@@ -10,6 +10,7 @@ import {
     GET_NAME_VIDEOGAME,
     GET_PLATFORMS,
     GET_DETAIL,
+    RESET_VIDEOGAMES,
 } from '../types';
 
 const LOCALHOST = 'http://localhost:3001';
@@ -108,3 +109,5 @@ export const orderByRating = (payload) => {
         payload,
     };
 };
+
+export const resetVideogames = () => ({ type: RESET_VIDEOGAMES });

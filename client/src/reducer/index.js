@@ -9,6 +9,7 @@ import {
     POST_VIDEOGAME,
     GET_PLATFORMS,
     GET_DETAIL,
+    RESET_VIDEOGAMES,
 } from '../types';
 
 const initialState = {
@@ -133,6 +134,12 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 detail: [action.payload],
+            };
+        case RESET_VIDEOGAMES:
+            return {
+                ...state,
+                videogames: [],
+                allVideogames: [],
             };
 
         default:

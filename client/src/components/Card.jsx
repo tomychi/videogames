@@ -19,7 +19,9 @@ export const Card = ({ name, image, rating, genres }) => {
                 />
                 <h5>
                     {rating
-                        ? stars.slice(0, Math.round(rating)).join('')
+                        ? stars.slice(0, Math.round(rating)).join('') +
+                          ' ' +
+                          rating
                         : 'No rating'}
                 </h5>
                 <p>{genres && genresFiltered2.join(', ')}</p>

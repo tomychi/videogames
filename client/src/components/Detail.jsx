@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Loading } from './Loading';
 
 import s from '../styles/detail.module.css';
+const stars = ['⭐', '⭐', '⭐', '⭐', '⭐'];
 
 export const Detail = ({ match }) => {
     const dispatch = useDispatch();
@@ -41,17 +42,27 @@ export const Detail = ({ match }) => {
                             <label>Released: </label> {detail[0].released}
                         </p>
                         <p>
-                            <label>Rating: </label> {detail[0].rating}
+                            <label>Rating: </label>{' '}
+                            {detail[0].rating
+                                ? stars
+                                      .slice(0, Math.round(detail[0].rating))
+                                      .join('') +
+                                  ' ' +
+                                  detail[0].rating
+                                : 'No rating'}
                         </p>
                         <p className={s.removeComa}>
                             <label>Platforms: </label>
-                            {detail[0].platforms.map((p) => p + ', ')}
+                            {detail[0].platforms.map((p) => p + ', ') ||
+                                'No platforms'}
                         </p>
                         <p className={s.removeComa}>
                             <label>Genres: </label>
                             {esIdSequelize(detail[0].id) // si es id de sequeliza
-                                ? detail[0].genres.map((g) => g.name + ', ')
-                                : detail[0].genres.map((g) => g + ', ')}
+                                ? detail[0].genres.map((g) => g.name + ', ') ||
+                                  'No genres'
+                                : detail[0].genres.map((g) => g + ', ') ||
+                                  'No genres '}
                         </p>
                         <p>
                             <label>Description: </label> {detail[0].description}
