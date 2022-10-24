@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getNameVideogames } from '../actions';
+import { getNameVideogames, resetVideogames } from '../actions';
 
 export const SearchBar = () => {
     const dispatch = useDispatch();
@@ -13,8 +13,11 @@ export const SearchBar = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(getNameVideogames(name));
-        setName('');
+        if (name.trim().length) {
+            dispatch(resetVideogames());
+            dispatch(getNameVideogames(name.trim()));
+            setName('');
+        }
     };
 
     return (

@@ -8,6 +8,7 @@ import {
     orderByName,
     orderByRating,
     resetVideogames,
+    memoryCurrentPage,
 } from '../actions';
 import { Link } from 'react-router-dom';
 import { Card } from './Card';
@@ -21,12 +22,13 @@ export const Home = () => {
     const dispatch = useDispatch();
     const allVideogames = useSelector((state) => state.videogames);
     const allGenres = useSelector((state) => state.genres);
+    const memoryPage = useSelector((state) => state.currentPage);
 
     // solo para que me haga el seteo de los estados
     const [orden, setOrden] = useState('');
 
     // currentPage es la pagina actual arranca en la pagina 1
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(memoryPage);
 
     // cuantos juegos quiero mostrar por pagina (por defecto 15)
     const [videogamesPerPage] = useState(15);
@@ -44,7 +46,11 @@ export const Home = () => {
     );
 
     // cambio de pagina
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    const handleCurrentPage = () => {
+        setCurrentPage(1);
+        dispatch(memoryCurrentPage(1));
+    };
 
     // nos traemos los videojuegos cuando se monta el componente
     useEffect(() => {
@@ -54,9 +60,9 @@ export const Home = () => {
 
     const handleRefresh = (e) => {
         e.preventDefault();
+        handleCurrentPage();
         dispatch(resetVideogames());
         dispatch(getVideogames());
-        setCurrentPage(1);
     };
 
     const handleFilterGenre = (e) => {
@@ -129,7 +135,8 @@ export const Home = () => {
                         <Paginado
                             videogamesPerPage={videogamesPerPage}
                             allVideogames={allVideogames}
-                            paginate={paginate}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
                         />
                     </div>
                 </div>

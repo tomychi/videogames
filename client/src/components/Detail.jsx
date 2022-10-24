@@ -1,4 +1,4 @@
-import { getDetail } from '../actions';
+import { getDetail, resetDetail } from '../actions';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +12,10 @@ export const Detail = ({ match }) => {
 
     useEffect(() => {
         dispatch(getDetail(match.params.id));
+
+        return () => {
+            dispatch(resetDetail());
+        };
     }, [dispatch, match.params.id]);
 
     const detail = useSelector((state) => state.detail);
@@ -64,8 +68,9 @@ export const Detail = ({ match }) => {
                                 : detail[0].genres.map((g) => g + ', ') ||
                                   'No genres '}
                         </p>
-                        <p>
-                            <label>Description: </label> {detail[0].description}
+                        <p className={s.description}>
+                            <label>Description: </label>
+                            <p>{detail[0].description}</p>
                         </p>
                     </div>
                 </div>

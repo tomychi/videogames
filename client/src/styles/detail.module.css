@@ -44,6 +44,7 @@
 
 }
 
+
 .detailInfo{
     display: flex;
     flex-direction: column;
@@ -103,4 +104,8 @@
         0 0 10px #746cfe,
         0 0 20px #746cfe,
         0 0 10px #ae8cfa;
+}
+.description p{
+    font-size: .9rem;
+    font-weight: 600;
 }

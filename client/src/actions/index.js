@@ -11,6 +11,8 @@ import {
     GET_PLATFORMS,
     GET_DETAIL,
     RESET_VIDEOGAMES,
+    MEMORY_CURRENT_PAGE,
+    RESET_DETAIL,
 } from '../types';
 
 const LOCALHOST = 'http://localhost:3001';
@@ -111,3 +113,10 @@ export const orderByRating = (payload) => {
 };
 
 export const resetVideogames = () => ({ type: RESET_VIDEOGAMES });
+
+export const memoryCurrentPage = (page) => ({
+    type: MEMORY_CURRENT_PAGE,
+    payload: page,
+});
+
+export const resetDetail = () => ({ type: RESET_DETAIL });

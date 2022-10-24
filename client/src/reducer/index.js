@@ -10,6 +10,8 @@ import {
     GET_PLATFORMS,
     GET_DETAIL,
     RESET_VIDEOGAMES,
+    MEMORY_CURRENT_PAGE,
+    RESET_DETAIL,
 } from '../types';
 
 const initialState = {
@@ -18,6 +20,7 @@ const initialState = {
     genres: [],
     platforms: [],
     detail: [],
+    currentPage: 1,
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -45,6 +48,7 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
             };
+
         case GET_NAME_VIDEOGAME:
             return {
                 ...state,
@@ -130,16 +134,30 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 videogames: sortedArr2,
             };
+
         case GET_DETAIL:
             return {
                 ...state,
                 detail: [action.payload],
             };
+
         case RESET_VIDEOGAMES:
             return {
                 ...state,
                 videogames: [],
                 allVideogames: [],
+            };
+
+        case MEMORY_CURRENT_PAGE:
+            return {
+                ...state,
+                currentPage: action.payload,
+            };
+
+        case RESET_DETAIL:
+            return {
+                ...state,
+                detail: [],
             };
 
         default:
