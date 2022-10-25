@@ -1,15 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    getVideogames,
-    getGenres,
-    filterGameByGenre,
-    filterCreated,
-    orderByName,
-    orderByRating,
-    resetVideogames,
-    memoryCurrentPage,
-} from '../actions';
+import { getVideogames, resetVideogames, memoryCurrentPage } from '../actions';
 import { Link } from 'react-router-dom';
 import { Card } from './Card';
 import { Navbar } from './Navbar';
@@ -21,11 +12,7 @@ import { Loading } from './Loading';
 export const Home = () => {
     const dispatch = useDispatch();
     const allVideogames = useSelector((state) => state.videogames);
-    const allGenres = useSelector((state) => state.genres);
     const memoryPage = useSelector((state) => state.currentPage);
-
-    // solo para que me haga el seteo de los estados
-    const [orden, setOrden] = useState('');
 
     // currentPage es la pagina actual arranca en la pagina 1
     const [currentPage, setCurrentPage] = useState(memoryPage);
@@ -54,7 +41,6 @@ export const Home = () => {
 
     // nos traemos los videojuegos cuando se monta el componente
     useEffect(() => {
-        dispatch(getGenres());
         dispatch(getVideogames());
     }, [dispatch]);
 
@@ -65,39 +51,11 @@ export const Home = () => {
         dispatch(getVideogames());
     };
 
-    const handleFilterGenre = (e) => {
-        e.preventDefault();
-        dispatch(filterGameByGenre(e.target.value));
-    };
-
-    const handleFilterCreated = (e) => {
-        e.preventDefault();
-        dispatch(filterCreated(e.target.value));
-    };
-
-    const handleOrderByName = (e) => {
-        e.preventDefault();
-        dispatch(orderByName(e.target.value));
-        setCurrentPage(1);
-        setOrden(`Ordenado: ${e.target.value}`);
-    };
-
-    const handleOrderByRating = (e) => {
-        e.preventDefault();
-        dispatch(orderByRating(e.target.value));
-        setCurrentPage(1);
-        setOrden(`Ordenado: ${e.target.value}`);
-        console.log(orden);
-    };
     return (
         <div>
             <Navbar
                 handleRefresh={handleRefresh}
-                handleFilterGenre={handleFilterGenre}
-                handleOrderByName={handleOrderByName}
-                handleFilterCreated={handleFilterCreated}
-                handleOrderByRating={handleOrderByRating}
-                allGenres={allGenres}
+                handleCurrentPage={handleCurrentPage}
             />
 
             {currentVideogames.length > 0 ? (

@@ -82,30 +82,32 @@ const rootReducer = (state = initialState, action) => {
             };
 
         case ORDER_BY_NAME:
-            let sortedArr =
-                action.payload === 'asc'
-                    ? state.videogames.sort((a, b) => {
-                          if (a.name > b.name) {
-                              return 1;
-                          }
-                          if (a.name < b.name) {
-                              return -1;
-                          }
-                          return 0;
-                      })
-                    : state.videogames.sort((a, b) => {
-                          if (a.name > b.name) {
-                              return -1;
-                          }
-                          if (a.name < b.name) {
-                              return 1;
-                          }
-                          return 0;
-                      });
+            let orderByName = [];
+            if (action.payload === 'asc') {
+                orderByName = state.videogames.sort((a, b) => {
+                    if (a.name > b.name) {
+                        return 1;
+                    }
+                    if (a.name < b.name) {
+                        return -1;
+                    }
+                    return 0;
+                });
+            } else {
+                orderByName = state.videogames.sort((a, b) => {
+                    if (a.name < b.name) {
+                        return 1;
+                    }
+                    if (a.name > b.name) {
+                        return -1;
+                    }
+                    return 0;
+                });
+            }
 
             return {
                 ...state,
-                videogames: sortedArr,
+                videogames: orderByName,
             };
 
         case ORDER_BY_RATING:

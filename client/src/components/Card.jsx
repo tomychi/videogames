@@ -15,7 +15,9 @@ export const Card = ({ name, image, rating, genres }) => {
                 />
                 <h5>
                     {rating
-                        ? stars.slice(0, Math.floor(rating)).join('')
+                        ? stars.slice(0, Math.floor(rating)).join('') +
+                          ' ' +
+                          rating
                         : `No rating`}
                 </h5>
                 <p>{genres.length ? genres.toString() : `No Genres`}</p>
