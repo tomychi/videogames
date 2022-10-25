@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { getGenres, postVideogame, getPlatforms } from '../actions';
+import {
+    getGenres,
+    postVideogame,
+    getPlatforms,
+    resetVideogames,
+    getVideogames,
+} from '../actions';
 import s from '../styles/gameCreated.module.css';
 
 const validate = (input) => {
@@ -129,6 +135,8 @@ export const GameCreated = () => {
                 background_image: '',
             });
             history.push('/home');
+            dispatch(resetVideogames());
+            dispatch(getVideogames());
         } else {
             alert('Verifique los datos ingresados');
         }

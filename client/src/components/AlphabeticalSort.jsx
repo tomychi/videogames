@@ -20,8 +20,9 @@ export const AlphabeticalSort = ({ handleCurrentPage }) => {
                 <option value='Ordenar' disabled>
                     Ordenar A-Z
                 </option>
-                <option value='asc'>Ascendente</option>
-                <option value='desc'>Descendente</option>
+                <option value='default'>Default</option>
+                <option value='asc'>A - Z</option>
+                <option value='desc'>Z - A</option>
             </select>
         </>
     );

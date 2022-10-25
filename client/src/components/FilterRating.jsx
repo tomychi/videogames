@@ -18,6 +18,7 @@ export const FilterRating = ({ handleCurrentPage }) => {
                 <option value='rating' disabled>
                     Rating
                 </option>
+                <option value='default'>Default</option>
                 <option value='low'>Low to High</option>
                 <option value='high'>High to Low</option>
             </select>

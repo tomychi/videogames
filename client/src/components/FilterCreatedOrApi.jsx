@@ -16,11 +16,12 @@ export const FilterCreatedOrApi = ({ handleCurrentPage }) => {
                 onChange={(e) => {
                     handleFilterCreated(e);
                 }}
-                defaultValue='All'
+                defaultValue='apiOrDb'
             >
-                <option value='All' disabled>
-                    Todos
+                <option value='apiOrDb' disabled>
+                    Api or DB
                 </option>
+                <option value='All'>Todos</option>
                 <option value='Created'>Creados</option>
                 <option value='Api'>Existentes</option>
             </select>

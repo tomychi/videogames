@@ -23,7 +23,12 @@ export const FilterGenres = ({ handleCurrentPage }) => {
                 onChange={(e) => {
                     handleFilterGameByGenre(e);
                 }}
+                defaultValue='Genres'
             >
+                <option value='Genres' disabled>
+                    {' '}
+                    Genres{' '}
+                </option>
                 <option value='All'>All</option>
                 {allGenres.map((genre, i) => (
                     <option key={i} value={genre}>
