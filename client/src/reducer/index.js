@@ -12,6 +12,7 @@ import {
     RESET_VIDEOGAMES,
     MEMORY_CURRENT_PAGE,
     RESET_DETAIL,
+    FROM_BY_NAME_TO_VIDEOGAMES,
 } from '../types';
 
 const initialState = {
@@ -21,6 +22,7 @@ const initialState = {
     platforms: [],
     detail: [],
     currentPage: 1,
+    videogamesBySearch: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -38,21 +40,11 @@ const rootReducer = (state = initialState, action) => {
                 genres: action.payload,
             };
 
-        case GET_PLATFORMS:
-            return {
-                ...state,
-                platforms: action.payload,
-            };
-
-        case POST_VIDEOGAME:
-            return {
-                ...state,
-            };
-
         case GET_NAME_VIDEOGAME:
             return {
                 ...state,
                 videogames: action.payload,
+                videogamesBySearch: action.payload,
             };
 
         case FILTER_GAME_BY_GENRE:
@@ -63,6 +55,11 @@ const rootReducer = (state = initialState, action) => {
                     : allVideogames.filter((game) =>
                           game.genres.includes(action.payload)
                       );
+
+            if (!statusFiltered.length) {
+                statusFiltered.push('Error');
+            }
+
             return {
                 ...state,
                 videogames: statusFiltered,
@@ -75,6 +72,10 @@ const rootReducer = (state = initialState, action) => {
                     ? allVideogames2.filter((game) => game.createInDb)
                     : allVideogames2.filter((game) => !game.createInDb);
 
+            if (!createdFilter.length) {
+                createdFilter.push('Error');
+            }
+
             return {
                 ...state,
                 videogames:
@@ -82,38 +83,35 @@ const rootReducer = (state = initialState, action) => {
             };
 
         case ORDER_BY_NAME:
-            let orderByName = [];
-            if (action.payload === 'asc') {
-                orderByName = state.videogames.sort((a, b) => {
-                    if (a.name > b.name) {
-                        return 1;
-                    }
-                    if (a.name < b.name) {
-                        return -1;
-                    }
-                    return 0;
-                });
-            } else {
-                orderByName = state.videogames.sort((a, b) => {
-                    if (a.name < b.name) {
-                        return 1;
-                    }
-                    if (a.name > b.name) {
-                        return -1;
-                    }
-                    return 0;
-                });
-            }
-
+            let alphabeticalOrder =
+                action.payload === 'asc'
+                    ? [...state.videogames].sort((a, b) => {
+                          if (a.name > b.name) {
+                              return 1;
+                          }
+                          if (a.name < b.name) {
+                              return -1;
+                          }
+                          return 0;
+                      })
+                    : [...state.videogames].sort((a, b) => {
+                          if (a.name > b.name) {
+                              return -1;
+                          }
+                          if (a.name < b.name) {
+                              return 1;
+                          }
+                          return 0;
+                      });
             return {
                 ...state,
-                videogames: orderByName,
+                videogames: [...alphabeticalOrder],
             };
 
         case ORDER_BY_RATING:
-            let sortedArr2 =
+            let ratingSort =
                 action.payload === 'low'
-                    ? state.videogames.sort((a, b) => {
+                    ? [...state.videogames].sort((a, b) => {
                           if (a.rating > b.rating) {
                               return 1;
                           }
@@ -122,19 +120,30 @@ const rootReducer = (state = initialState, action) => {
                           }
                           return 0;
                       })
-                    : state.videogames.sort((a, b) => {
-                          if (a.rating > b.rating) {
-                              return -1;
-                          }
+                    : [...state.videogames].sort((a, b) => {
                           if (a.rating < b.rating) {
                               return 1;
+                          }
+                          if (a.rating > b.rating) {
+                              return -1;
                           }
                           return 0;
                       });
 
             return {
                 ...state,
-                videogames: sortedArr2,
+                videogames: [...ratingSort],
+            };
+
+        case GET_PLATFORMS:
+            return {
+                ...state,
+                platforms: action.payload,
+            };
+
+        case POST_VIDEOGAME:
+            return {
+                ...state,
             };
 
         case GET_DETAIL:
@@ -147,7 +156,7 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 videogames: [],
-                allVideogames: [],
+                videogamesBySearch: [],
             };
 
         case MEMORY_CURRENT_PAGE:
@@ -160,6 +169,13 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 detail: [],
+            };
+
+        case FROM_BY_NAME_TO_VIDEOGAMES:
+            return {
+                ...state,
+                videogames: [...state.allVideogames],
+                videogamesBySearch: [],
             };
 
         default:

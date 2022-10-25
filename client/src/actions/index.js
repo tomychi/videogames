@@ -13,6 +13,7 @@ import {
     RESET_VIDEOGAMES,
     MEMORY_CURRENT_PAGE,
     RESET_DETAIL,
+    FROM_BY_NAME_TO_VIDEOGAMES,
 } from '../types';
 
 const LOCALHOST = 'http://localhost:3001';
@@ -120,3 +121,7 @@ export const memoryCurrentPage = (page) => ({
 });
 
 export const resetDetail = () => ({ type: RESET_DETAIL });
+
+export const fromByNameToVideogames = () => ({
+    type: FROM_BY_NAME_TO_VIDEOGAMES,
+});

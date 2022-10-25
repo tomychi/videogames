@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getVideogames, resetVideogames, memoryCurrentPage } from '../actions';
-import { Link } from 'react-router-dom';
-import { Card } from './Card';
 import { Navbar } from './Navbar';
 import { Paginado } from './Paginado';
+import { ErrorNotFound } from './ErrorNotFound';
+import { Loading } from './Loading';
+import { ContainerCards } from './ContainerCards';
 
 import s from '../styles/home.module.css';
-import { Loading } from './Loading';
 
 export const Home = () => {
     const dispatch = useDispatch();
@@ -33,16 +33,12 @@ export const Home = () => {
     );
 
     // cambio de pagina
-
     const handleCurrentPage = () => {
         setCurrentPage(1);
         dispatch(memoryCurrentPage(1));
     };
 
     // nos traemos los videojuegos cuando se monta el componente
-    useEffect(() => {
-        dispatch(getVideogames());
-    }, [dispatch]);
 
     const handleRefresh = (e) => {
         e.preventDefault();
@@ -51,44 +47,26 @@ export const Home = () => {
         dispatch(getVideogames());
     };
 
+    useEffect(() => {
+        dispatch(getVideogames());
+    }, [dispatch]);
+
     return (
         <div>
             <Navbar
                 handleRefresh={handleRefresh}
                 handleCurrentPage={handleCurrentPage}
             />
-
-            {currentVideogames.length > 0 ? (
-                <div className={s.container}>
-                    {
-                        // si hay videojuegos, los muestro
-                        <div className={s.cards}>
-                            {currentVideogames?.map((v, i) => (
-                                <div key={i}>
-                                    <Link
-                                        to={`/videogames/${v.id}`}
-                                        className={s.linkCard}
-                                    >
-                                        <Card
-                                            key={v.id}
-                                            name={v.name}
-                                            image={v.background_image}
-                                            rating={v.rating}
-                                            // agrupar los generenos en un array los que tengan el mismo id
-
-                                            genres={v.genres.map((g) => {
-                                                if (typeof g === 'object') {
-                                                    return g.name;
-                                                } else {
-                                                    return g;
-                                                }
-                                            })}
-                                        />
-                                    </Link>
-                                </div>
-                            ))}
-                        </div>
-                    }
+            {allVideogames.length === 1 && allVideogames[0] === 'Error' ? (
+                <ErrorNotFound />
+            ) : allVideogames.length === 0 ? (
+                <Loading />
+            ) : (
+                <div>
+                    <ContainerCards
+                        currentVideogames={currentVideogames}
+                        allVideogames={allVideogames}
+                    />
                     <div className={s.footer}>
                         <Paginado
                             videogamesPerPage={videogamesPerPage}
@@ -98,8 +76,6 @@ export const Home = () => {
                         />
                     </div>
                 </div>
-            ) : (
-                <Loading />
             )}
         </div>
     );

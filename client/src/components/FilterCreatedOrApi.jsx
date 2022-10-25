@@ -18,7 +18,9 @@ export const FilterCreatedOrApi = ({ handleCurrentPage }) => {
                 }}
                 defaultValue='All'
             >
-                <option value='All'>Todos</option>
+                <option value='All' disabled>
+                    Todos
+                </option>
                 <option value='Created'>Creados</option>
                 <option value='Api'>Existentes</option>
             </select>

@@ -1,11 +1,11 @@
+import error from '../assets/error.gif';
+import s from '../styles/errorNotFound.module.css';
+
 export const ErrorNotFound = () => {
     return (
-        <div>
+        <div className={s.contentError}>
             <p>Sorry, This Content Was Not Found</p>
-            <img
-                src='https://media.giphy.com/media/3o7TKSjRrfIPjeUGDK/giphy.gif'
-                alt='Page Not Found'
-            />
+            <img src={error} alt='Page Not Found' />
         </div>
     );
 };

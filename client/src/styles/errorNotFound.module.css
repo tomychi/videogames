@@ -1,0 +1,29 @@
+.contentError {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    /* From https://css.glass */
+        background: rgba(174, 140, 250, 0.56);
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(14.7px);
+        -webkit-backdrop-filter: blur(14.7px);
+        border: 1px solid rgba(174, 140, 250, 0.3);
+    
+}
+
+.contentError p {
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: red;
+    margin: 0;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+    text-shadow: 0 0 5px red,
+            0 0 10px red,
+            0 0 20px #ae8cfa,
+            0 0 90px #ae8cfa;
+}

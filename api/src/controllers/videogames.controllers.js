@@ -63,6 +63,19 @@ const getDbInfo = async () => {
     }
 };
 
+const getVideogamesApiByName = async (name, quantity) => {
+    try {
+        const apiInfo = await axios.get(
+            `https://api.rawg.io/api/games?key=${API_KEY}&search=${name.trim()}`
+        );
+        let apiInfo2 = apiInfo.data.results.slice(0, quantity);
+
+        return apiInfo2;
+    } catch (error) {
+        throw new Error(`Error en la api al traer por nombre ${error}`);
+    }
+};
+
 const getVideogameApiById = async (idVideogame) => {
     try {
         const apiInfo = await axios.get(
@@ -93,11 +106,11 @@ const getVideogameApiById = async (idVideogame) => {
 
         return objVideogame;
     } catch (error) {
-        throw new Error(`Error en la api ${error}`);
+        throw new Error(`Error en la api al traer por ID ${error}`);
     }
 };
 
-// GET VIDEOGAME BY ID --------------------------------------------------------
+// GET VIDEOGAME BY ID
 const getVideogameById = async (req, res) => {
     const { id } = req.params;
 
@@ -121,27 +134,62 @@ const getVideogameById = async (req, res) => {
 };
 
 const getAllVideoGames = async (req, res) => {
-    try {
-        const name = req.query.name;
-        const apiInfo = await getApiInfo();
-        const dbInfo = await getDbInfo();
-        const allVideoGames = apiInfo.concat(dbInfo);
-        if (name) {
-            const videogameName = allVideoGames.filter((e) =>
-                e.name.toLowerCase().includes(name.toLowerCase())
-            );
+    const name = req.query.name;
+    const apiInfo = await getApiInfo();
+    const dbInfo = await getDbInfo();
 
-            if (videogameName.length) {
-                return res.status(200).send(videogameName);
-            }
-            return res.status(404).send('No se encontro el juego');
+    if (name) {
+        let name2 = name.toLowerCase().trim();
+        let quantity = 15;
+        let nameDb = dbInfo.filter((game) =>
+            game.name.toLowerCase().includes(name2)
+        );
+        if (nameDb) {
+            quantity = 15 - nameDb.length;
         }
-        return res.status(200).send(allVideoGames);
-    } catch (error) {
-        throw new Error(`Error en obtener todos los videojuegos ${error}`);
-    }
-};
 
+        let videogames = await getVideogamesApiByName(name2, quantity);
+        videogames = videogames.map((game) => {
+            const { id, name, background_image, genres, rating } = game;
+            const obj = {
+                id,
+                name,
+                background_image,
+                genres: genres.map((g) => g.name),
+                rating,
+            };
+            return obj;
+        });
+
+        nameDb = nameDb.map((game) => {
+            const { id, name, image, genres, rating } = game;
+            const obj = {
+                id,
+                name,
+                image,
+                genres: genres.map((g) => g.name),
+                rating,
+            };
+            return obj;
+        });
+
+        videogames = [...nameDb, ...videogames];
+
+        if (!videogames.length) videogames.push('Error');
+        return res.status(200).send(videogames);
+    }
+
+    const allVideogames = [...apiInfo, ...dbInfo];
+    return res.status(200).send(allVideogames);
+};
+// const videogameName = allVideoGames.filter((e) =>
+//     e.name.toLowerCase().includes(name.toLowerCase())
+// );
+
+// if (videogameName.length) {
+//     return res.status(200).send(videogameName);
+// }
+// return res.status(404).send('No se encontro el juego');
 const postVideogame = async (req, res) => {
     try {
         const {
