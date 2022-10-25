@@ -13,29 +13,11 @@ module.exports = (sequelize) => {
         name: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                isNull: {
-                    msg: 'It requires a valid name',
-                },
-                is: {
-                    args: /^[a-zA-Z0-9\s]+$/i,
-                    msg: 'It requires a valid name',
-                },
-            },
         },
 
         description: {
             type: DataTypes.TEXT,
             allowNull: false,
-            validate: {
-                isNull: {
-                    msg: 'It requires a valid description',
-                },
-                is: {
-                    args: /^[a-zA-Z0-9\s]+$/i,
-                    msg: 'It requires a valid description',
-                },
-            },
         },
         released: {
             type: DataTypes.STRING,

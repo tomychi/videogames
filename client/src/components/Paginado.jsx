@@ -34,7 +34,7 @@ export const Paginado = ({
         <nav>
             <ul className={s.paginado}>
                 {pageNumbers.length > 1 && (
-                    <li key='next'>
+                    <li key='prev'>
                         <button
                             onClick={() => paginated('prev')}
                             className={s.active}

@@ -134,7 +134,8 @@ export const GameCreated = () => {
         }
     };
 
-    const handleDeletePlatforms = (p) => {
+    const handleDeletePlatforms = (e, p) => {
+        e.preventDefault();
         setInput({
             ...input,
             platforms: input.platforms.filter((platform) => platform !== p),
@@ -148,7 +149,8 @@ export const GameCreated = () => {
         );
     };
 
-    const handleDeleteGenres = (g) => {
+    const handleDeleteGenres = (e, g) => {
+        e.preventDefault();
         setInput({
             ...input,
             genres: input.genres.filter((genre) => genre !== g),
@@ -297,8 +299,8 @@ export const GameCreated = () => {
                                         <div key={i} className={s.platforms}>
                                             <p>{p}</p>
                                             <button
-                                                onClick={() =>
-                                                    handleDeletePlatforms(p)
+                                                onClick={(e) =>
+                                                    handleDeletePlatforms(e, p)
                                                 }
                                                 className={s.deleteBtn}
                                             >
@@ -335,8 +337,8 @@ export const GameCreated = () => {
                                         <div key={i} className={s.genres}>
                                             <p>{genre}</p>
                                             <button
-                                                onClick={() =>
-                                                    handleDeleteGenres(genre)
+                                                onClick={(e) =>
+                                                    handleDeleteGenres(e, genre)
                                                 }
                                                 className={s.deleteBtn}
                                             >

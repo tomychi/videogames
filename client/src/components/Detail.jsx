@@ -19,16 +19,6 @@ export const Detail = ({ match }) => {
     }, [dispatch, match.params.id]);
 
     const detail = useSelector((state) => state.detail);
-
-    // pequeña validación para ver si es un id de la base de datos
-    const esIdSequelize = (id) => {
-        if (id.length === 36) {
-            return true;
-        } else {
-            return false;
-        }
-    };
-
     return (
         // si game es undefined no renderizo nada
         detail.length > 0 ? (
@@ -62,15 +52,17 @@ export const Detail = ({ match }) => {
                         </p>
                         <p className={s.removeComa}>
                             <label>Genres: </label>
-                            {esIdSequelize(detail[0].id) // si es id de sequeliza
-                                ? detail[0].genres.map((g) => g.name + ', ') ||
-                                  'No genres'
-                                : detail[0].genres.map((g) => g + ', ') ||
-                                  'No genres '}
+                            {detail[0].genres?.map((g) => {
+                                if (typeof g === 'object') {
+                                    return g.name + ', ';
+                                } else {
+                                    return g + ', ';
+                                }
+                            })}
                         </p>
                         <p className={s.description}>
                             <label>Description: </label>
-                            <p>{detail[0].description}</p>
+                            {detail[0].description}
                         </p>
                     </div>
                 </div>

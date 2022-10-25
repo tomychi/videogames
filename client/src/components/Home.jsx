@@ -89,7 +89,6 @@ export const Home = () => {
         setOrden(`Ordenado: ${e.target.value}`);
         console.log(orden);
     };
-    console.log(currentVideogames);
     return (
         <div>
             <Navbar
@@ -119,12 +118,13 @@ export const Home = () => {
                                             rating={v.rating}
                                             // agrupar los generenos en un array los que tengan el mismo id
 
-                                            genres={
-                                                // cuando sea un array de objetos lo concateno con el spread operator
-                                                v.genres.concat(
-                                                    v.genres.map((g) => g.name)
-                                                )
-                                            }
+                                            genres={v.genres.map((g) => {
+                                                if (typeof g === 'object') {
+                                                    return g.name;
+                                                } else {
+                                                    return g;
+                                                }
+                                            })}
                                         />
                                     </Link>
                                 </div>
