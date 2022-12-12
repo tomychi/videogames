@@ -13,6 +13,8 @@ import {
     MEMORY_CURRENT_PAGE,
     RESET_DETAIL,
     FROM_BY_NAME_TO_VIDEOGAMES,
+    TRAER_PS5,
+    BUSQUEDA_EN_DIRECTO,
 } from '../types';
 
 const initialState = {
@@ -138,6 +140,16 @@ const rootReducer = (state = initialState, action) => {
                 };
             }
 
+        case TRAER_PS5:
+            let gamesps5 = [...state.allVideogames].filter((e) =>
+                e.platforms.includes(action.payload)
+            );
+
+            return {
+                ...state,
+                videogames: [...gamesps5],
+            };
+
         case ORDER_BY_NAME:
             let alphabeticalOrder;
             if (action.payload === 'default') {
@@ -230,6 +242,21 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 videogames: [...state.allVideogames],
                 videogamesBySearch: [],
+            };
+
+        case BUSQUEDA_EN_DIRECTO:
+            let searchFilter;
+            if (action.payload === '') {
+                searchFilter = [...state.allVideogames];
+            } else {
+                searchFilter = [...state.allVideogames].filter((el) =>
+                    el.name.toLowerCase().includes(action.payload.toLowerCase())
+                );
+            }
+
+            return {
+                ...state,
+                videogames: [...searchFilter],
             };
 
         default:

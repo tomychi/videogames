@@ -19,10 +19,9 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
-require('dotenv').config();
-const port = process.env.PORT || 3000;
 const { loadGenres } = require('./src/controllers/genres.controllers.js');
 const { loadPlatforms } = require('./src/controllers/platforms.controllers.js');
+const port = process.env.PORT || 3000;
 
 // Syncing all the models at once.
 conn.sync({ force: false }).then(async () => {

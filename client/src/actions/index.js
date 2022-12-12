@@ -14,13 +14,13 @@ import {
     MEMORY_CURRENT_PAGE,
     RESET_DETAIL,
     FROM_BY_NAME_TO_VIDEOGAMES,
+    TRAER_PS5,
+    BUSQUEDA_EN_DIRECTO,
 } from '../types';
-
-const LOCALHOST = 'http://localhost:3001';
 
 export const getVideogames = () => {
     return async function (dispatch) {
-        const json = await axios.get(`${LOCALHOST}/videogames`);
+        const json = await axios.get(`/videogames`);
         return dispatch({
             type: GET_VIDEOGAMES,
             payload: json.data,
@@ -31,9 +31,7 @@ export const getVideogames = () => {
 export const getNameVideogames = (name) => {
     return async function (dispatch) {
         try {
-            const json = await axios.get(
-                `${LOCALHOST}/videogames?name=${name}`
-            );
+            const json = await axios.get(`/videogames?name=${name}`);
             return dispatch({
                 type: GET_NAME_VIDEOGAME,
                 payload: json.data,
@@ -47,7 +45,7 @@ export const getNameVideogames = (name) => {
 export const getDetail = (id) => {
     return async function (dispatch) {
         try {
-            const json = await axios.get(`${LOCALHOST}/videogames/${id}`);
+            const json = await axios.get(`/videogames/${id}`);
             return dispatch({
                 type: GET_DETAIL,
                 payload: json.data,
@@ -60,7 +58,7 @@ export const getDetail = (id) => {
 
 export const getGenres = () => {
     return async function (dispatch) {
-        const json = await axios.get(`${LOCALHOST}/genres`);
+        const json = await axios.get(`/genres`);
         return dispatch({
             type: GET_GENRES,
             payload: json.data,
@@ -70,7 +68,7 @@ export const getGenres = () => {
 
 export const getPlatforms = () => {
     return async function (dispatch) {
-        const json = await axios.get(`${LOCALHOST}/platforms`);
+        const json = await axios.get(`/platforms`);
         return dispatch({
             type: GET_PLATFORMS,
             payload: json.data,
@@ -80,7 +78,7 @@ export const getPlatforms = () => {
 
 export const postVideogame = (payload) => {
     return async function (dispatch) {
-        const json = await axios.post(`${LOCALHOST}/videogames`, payload);
+        const json = await axios.post(`/videogames`, payload);
         return json;
     };
 };
@@ -88,6 +86,14 @@ export const postVideogame = (payload) => {
 export const filterGameByGenre = (payload) => {
     return {
         type: FILTER_GAME_BY_GENRE,
+        payload,
+    };
+};
+
+export const traerPS5 = (payload) => {
+    console.log('holaa');
+    return {
+        type: TRAER_PS5,
         payload,
     };
 };
@@ -124,4 +130,9 @@ export const resetDetail = () => ({ type: RESET_DETAIL });
 
 export const fromByNameToVideogames = () => ({
     type: FROM_BY_NAME_TO_VIDEOGAMES,
+});
+
+export const busquedaEnDirecto = (payload) => ({
+    type: BUSQUEDA_EN_DIRECTO,
+    payload,
 });

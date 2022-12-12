@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getNameVideogames, resetVideogames } from '../actions';
+import {
+    getNameVideogames,
+    resetVideogames,
+    busquedaEnDirecto,
+} from '../actions';
 
 export const SearchBar = () => {
     const dispatch = useDispatch();
@@ -9,6 +13,7 @@ export const SearchBar = () => {
     const handleInputChange = (e) => {
         e.preventDefault();
         setName(e.target.value);
+        dispatch(busquedaEnDirecto(name.trim()));
     };
 
     const handleSubmit = (e) => {

@@ -4,7 +4,7 @@ import { AlphabeticalSort } from './AlphabeticalSort';
 import { FilterCreatedOrApi } from './FilterCreatedOrApi';
 import { FilterGenres } from './FilterGenres';
 import { FilterRating } from './FilterRating';
-
+import { Play5 } from './Play5';
 import s from '../styles/navbar.module.css';
 
 export const Navbar = ({ handleRefresh, handleCurrentPage }) => {
@@ -19,6 +19,7 @@ export const Navbar = ({ handleRefresh, handleCurrentPage }) => {
                     onClick={(e) => {
                         handleRefresh(e);
                     }}
+                    type='button'
                 >
                     Refresh
                 </button>
@@ -28,6 +29,7 @@ export const Navbar = ({ handleRefresh, handleCurrentPage }) => {
                 <FilterCreatedOrApi handleCurrentPage={handleCurrentPage} />
                 <FilterGenres handleCurrentPage={handleCurrentPage} />
                 <FilterRating handleCurrentPage={handleCurrentPage} />
+                <Play5 />
                 <SearchBar />
             </div>
         </div>

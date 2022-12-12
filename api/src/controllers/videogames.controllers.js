@@ -117,7 +117,6 @@ const getVideogameById = async (req, res) => {
     try {
         if (id) {
             const dbVideogames = await getDbInfo();
-
             const videoGameFoundDb = dbVideogames.find(
                 (game) => game.id === id
             );
@@ -178,18 +177,10 @@ const getAllVideoGames = async (req, res) => {
         if (!videogames.length) videogames.push('Error');
         return res.status(200).send(videogames);
     }
-
     const allVideogames = [...apiInfo, ...dbInfo];
     return res.status(200).send(allVideogames);
 };
-// const videogameName = allVideoGames.filter((e) =>
-//     e.name.toLowerCase().includes(name.toLowerCase())
-// );
 
-// if (videogameName.length) {
-//     return res.status(200).send(videogameName);
-// }
-// return res.status(404).send('No se encontro el juego');
 const postVideogame = async (req, res) => {
     try {
         const {

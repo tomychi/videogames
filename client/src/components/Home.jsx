@@ -6,7 +6,6 @@ import { Paginado } from './Paginado';
 import { ErrorNotFound } from './ErrorNotFound';
 import { Loading } from './Loading';
 import { ContainerCards } from './ContainerCards';
-
 import s from '../styles/home.module.css';
 
 export const Home = () => {
@@ -48,25 +47,28 @@ export const Home = () => {
     };
 
     useEffect(() => {
-        dispatch(getVideogames());
-    }, [dispatch]);
+        if (allVideogames.length === 0) {
+            dispatch(getVideogames());
+        }
+    }, [dispatch, allVideogames]);
 
     return (
         <div>
-            <Navbar
-                handleRefresh={handleRefresh}
-                handleCurrentPage={handleCurrentPage}
-            />
             {allVideogames.length === 1 && allVideogames[0] === 'Error' ? (
                 <ErrorNotFound />
             ) : allVideogames.length === 0 ? (
                 <Loading />
             ) : (
                 <div>
+                    <Navbar
+                        handleRefresh={handleRefresh}
+                        handleCurrentPage={handleCurrentPage}
+                    />
                     <ContainerCards
                         currentVideogames={currentVideogames}
                         allVideogames={allVideogames}
                     />
+
                     <div className={s.footer}>
                         <Paginado
                             videogamesPerPage={videogamesPerPage}

@@ -1,14 +1,15 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { memoryCurrentPage } from '../actions';
 import s from '../styles/paginado.module.css';
 
 export const Paginado = ({
     videogamesPerPage,
-    allVideogames,
     currentPage,
     setCurrentPage,
 }) => {
     const dispatch = useDispatch();
+    const allVideogames = useSelector((state) => state.videogames);
+
     const pageNumbers = [];
     const lastPage = Math.ceil(allVideogames.length / videogamesPerPage);
     for (let i = 1; i <= Math.ceil(lastPage); i++) {
