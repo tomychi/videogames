@@ -1,5 +1,7 @@
 const axios = require('axios');
 const { Platform } = require('../db.js');
+require('dotenv').config();
+
 const { API_KEY } = process.env;
 
 const loadPlatforms = async (db = false) => {
